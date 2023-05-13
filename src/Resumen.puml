@@ -1,0 +1,172 @@
+@startuml
+left to right direction
+"Actor" as Ac1
+"Actor" as ac2
+rectangle Sistema{
+usecase "Caso de\n uso" as cau1
+usecase "Caso de\n uso" as cau2
+usecase "Caso de\n uso" as cau3
+}
+ac2 -up- cau2
+ac2 -up- cau3
+Ac1 -down- cau1
+Ac1 -down- cau2
+Ac1 -down- cau3
+note "Comunicación" as no1
+note "Entorno de sistema" as no2
+no1 --> cau3
+:no2: -up-> (Sistema)
+
+@enduml
+@startuml
+left to right direction
+"Socio" as Ac1
+"Bibliotecario" as ac2
+rectangle Biblioteca{
+usecase "Reservar \n libro" as cau1
+usecase "Devolver\n libro" as cau3
+usecase "Prestar\n libro" as cau2
+usecase "Actualizar\n Catálogo" as cau4
+}
+
+Ac1 -down- cau1
+Ac1 -down- cau2
+Ac1 -down- cau3
+ac2 -up- cau2
+ac2 -up- cau4
+
+
+
+@enduml
+
+
+@startjson
+{
+   "Caso de uso":"",
+   "Actores":"                                               ",
+   "Actores":"",
+   "Actores":"",
+   "Actores":"",
+   "Actores":"",
+   "Actores":"",
+   "Actores":"",
+   "Flujo de eventos":"",
+   "Actor": "Sistema",
+   "":""
+}
+@endjson
+
+
+@startjson
+<style>
+jsonDiagram {
+BackGroundColor #eaff92
+FontStyle italic
+}
+</style>
+{
+   "**Caso de uso **":"Reservar Libro",
+   "**Actores**":"Socio" ,
+   "**Resumen**":"El socio puede solicitar la reserva de un libro para su posterior\\n préstamo, a partir de una fecha determinada",
+   "**Precondiciones**":"El socio no tiene ninguna reserva",
+   "**Postcondiciones**":"El socio tiene una reserva y el libro tiene una nueva reserva a partir de\\nuna fecha",
+   "**Incluye**":"- -",
+   "**Extiende**":"- -",
+   "**Hereda de**":"- -",
+   "**Flujo de eventos**":"",
+   "                  Actor": "                                                          Sistema",
+   "1. El socio solicita la reserva (codigo,\\n libro, fecha)\\n\\n\\n\\n5.El socio confirma la reserva":"2.El sistema comprueba que el socio no tiene reserva\\n 3.El sistema compueba que esta libre para la fecha solicitada\\n4. El sistema solicita confirmación de la reserva\\n\\n6.El sistema realiza la reserva"
+}
+@endjson
+
+@startuml
+left to right direction
+"Bibliotecario" as bib
+usecase "Baja socio" as Bso
+usecase "Buscar socio" as Bsoci
+bib --> Bso
+Bso ..> Bsoci : <<include>>
+@enduml
+
+
+@startuml
+left to right direction
+usecase "Evaluar\nSolicitud Credito" as Bso
+usecase "Solitar Información adicional al\ncliente" as Bsoci
+bib --> Bso
+Bsoci .up.> Bso : <<extend>>
+@enduml
+
+
+@startuml
+left to right direction
+usecase "Enviar solicitud\ncrédito" as Bso
+usecase "Enviar solicitud de\ncrédito personal" as Bsp
+usecase "Enviar solicitud de\ncrédito empresarial" as Bsoci
+Agente --> Bso
+Bsoci -left-|> Bso
+Bsp -up-|> Bso
+@enduml
+
+
+@startuml
+" Cliente\nBancario" as clb
+"    Cliente\nCorporativo" as clc
+"Cliente\nNormal" as cln
+cln -up-|> clb
+clc -up-|> clb
+note "Actor antecesor" as na1
+note "Actor descendiente" as nad
+na1 -left-> clb
+nad -right-> cln
+@enduml
+
+@startuml
+left to right direction
+"Empleado" as emp
+"Administrador" as adm
+rectangle EmpresaPedidos{
+usecase "Introducir\nPedido" as ip
+usecase "Cancelar\nPedido" as cp
+usecase "Obtener Estado\nPedido" as oep
+usecase "Borrar Pedido" as bp
+usecase "Buscar Pedidos" as bps
+usecase "Alta Cliente" as ac
+usecase "Buscar Cliente" as bc
+usecase "Nuevo Producto" as np
+usecase "Borrar Producto" as bpro
+}
+emp -up- ip
+emp -- cp
+emp -- oep
+emp -- bp
+emp -- bps
+emp -- ac
+emp -- bc
+adm -up- np
+adm -up- bpro
+@enduml
+
+@startuml
+left to right direction
+"Empleado"as em
+usecase "Alta Cliente" as ac
+usecase "Introducir\nPedido" as ip
+usecase "Obtener\nEstado\Pedido" as oep
+usecase "Cancelar\nPedido" as cp
+usecase "Buscar\nCliente"as bctl
+usecase "Pago en\nCuenta" as pcc
+usecase "Buscar\nPedido" as bped
+usecase "Pago con\nTarjeta" as pcta
+em --ac
+em -- ip
+em -- oep
+em --cp
+ac --> ip : extiende
+ip ..> bctl : incluye
+ip <.. pcc : extiende
+em -- bped
+oep <..bped  : incluye
+pcta --> ip : extiende
+
+@enduml
